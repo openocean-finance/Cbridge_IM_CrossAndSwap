@@ -1,0 +1,943 @@
+{
+	"compiler": {
+		"version": "0.8.9+commit.e5eed63a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_messageBus",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_supportedDex",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_nativeWrap",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "id",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint64",
+						"name": "srcChainId",
+						"type": "uint64"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountIn",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "tokenIn",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountOut",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "tokenOut",
+						"type": "address"
+					}
+				],
+				"name": "DirectSwap",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "messageBus",
+						"type": "address"
+					}
+				],
+				"name": "MessageBusUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "id",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dstAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "enum TransferSwap.SwapStatus",
+						"name": "status",
+						"type": "uint8"
+					}
+				],
+				"name": "SwapRequestDone",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "id",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint64",
+						"name": "dstChainId",
+						"type": "uint64"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "srcAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "srcToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "dstToken",
+						"type": "address"
+					}
+				],
+				"name": "SwapRequestSent",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "_sender",
+						"type": "bytes"
+					},
+					{
+						"internalType": "uint64",
+						"name": "_srcChainId",
+						"type": "uint64"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_message",
+						"type": "bytes"
+					},
+					{
+						"internalType": "address",
+						"name": "_executor",
+						"type": "address"
+					}
+				],
+				"name": "executeMessage",
+				"outputs": [
+					{
+						"internalType": "enum IMessageReceiverApp.ExecutionStatus",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_sender",
+						"type": "address"
+					},
+					{
+						"internalType": "uint64",
+						"name": "_srcChainId",
+						"type": "uint64"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_message",
+						"type": "bytes"
+					},
+					{
+						"internalType": "address",
+						"name": "_executor",
+						"type": "address"
+					}
+				],
+				"name": "executeMessage",
+				"outputs": [
+					{
+						"internalType": "enum IMessageReceiverApp.ExecutionStatus",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint64",
+						"name": "_srcChainId",
+						"type": "uint64"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_message",
+						"type": "bytes"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "executeMessageWithTransfer",
+				"outputs": [
+					{
+						"internalType": "enum IMessageReceiverApp.ExecutionStatus",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint64",
+						"name": "_srcChainId",
+						"type": "uint64"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_message",
+						"type": "bytes"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "executeMessageWithTransferFallback",
+				"outputs": [
+					{
+						"internalType": "enum IMessageReceiverApp.ExecutionStatus",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_message",
+						"type": "bytes"
+					},
+					{
+						"internalType": "address",
+						"name": "_executor",
+						"type": "address"
+					}
+				],
+				"name": "executeMessageWithTransferRefund",
+				"outputs": [
+					{
+						"internalType": "enum IMessageReceiverApp.ExecutionStatus",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "messageBus",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "minSwapAmounts",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "nativeWrap",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "ooSwap",
+				"outputs": [
+					{
+						"internalType": "address payable",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_messageBus",
+						"type": "address"
+					}
+				],
+				"name": "setMessageBus",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_token",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_minSwapAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "setMinSwapAmount",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_nativeWrap",
+						"type": "address"
+					}
+				],
+				"name": "setNativeWrap",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_ooSwap",
+						"type": "address"
+					}
+				],
+				"name": "setOOSwap",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_dex",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "_enabled",
+						"type": "bool"
+					}
+				],
+				"name": "setSupportedDex",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amountIn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint64",
+						"name": "_dstChainId",
+						"type": "uint64"
+					},
+					{
+						"components": [
+							{
+								"internalType": "address[]",
+								"name": "path",
+								"type": "address[]"
+							},
+							{
+								"internalType": "bytes",
+								"name": "_srcSwapExtraData",
+								"type": "bytes"
+							},
+							{
+								"internalType": "bytes",
+								"name": "_dstSwapExtraData",
+								"type": "bytes"
+							}
+						],
+						"internalType": "struct TransferSwap.SwapInfo",
+						"name": "_srcSwap",
+						"type": "tuple"
+					},
+					{
+						"components": [
+							{
+								"internalType": "address[]",
+								"name": "path",
+								"type": "address[]"
+							},
+							{
+								"internalType": "bytes",
+								"name": "_srcSwapExtraData",
+								"type": "bytes"
+							},
+							{
+								"internalType": "bytes",
+								"name": "_dstSwapExtraData",
+								"type": "bytes"
+							}
+						],
+						"internalType": "struct TransferSwap.SwapInfo",
+						"name": "_dstSwap",
+						"type": "tuple"
+					},
+					{
+						"internalType": "uint32",
+						"name": "_maxBridgeSlippage",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint64",
+						"name": "_nonce",
+						"type": "uint64"
+					}
+				],
+				"name": "transferWithSwap",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amountIn",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint64",
+						"name": "_dstChainId",
+						"type": "uint64"
+					},
+					{
+						"components": [
+							{
+								"internalType": "address[]",
+								"name": "path",
+								"type": "address[]"
+							},
+							{
+								"internalType": "bytes",
+								"name": "_srcSwapExtraData",
+								"type": "bytes"
+							},
+							{
+								"internalType": "bytes",
+								"name": "_dstSwapExtraData",
+								"type": "bytes"
+							}
+						],
+						"internalType": "struct TransferSwap.SwapInfo",
+						"name": "_srcSwap",
+						"type": "tuple"
+					},
+					{
+						"components": [
+							{
+								"internalType": "address[]",
+								"name": "path",
+								"type": "address[]"
+							},
+							{
+								"internalType": "bytes",
+								"name": "_srcSwapExtraData",
+								"type": "bytes"
+							},
+							{
+								"internalType": "bytes",
+								"name": "_dstSwapExtraData",
+								"type": "bytes"
+							}
+						],
+						"internalType": "struct TransferSwap.SwapInfo",
+						"name": "_dstSwap",
+						"type": "tuple"
+					},
+					{
+						"internalType": "uint32",
+						"name": "_maxBridgeSlippage",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint64",
+						"name": "_nonce",
+						"type": "uint64"
+					},
+					{
+						"internalType": "bool",
+						"name": "_nativeOut",
+						"type": "bool"
+					}
+				],
+				"name": "transferWithSwapNative",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"executeMessage(address,uint64,bytes,address)": {
+					"params": {
+						"_executor": "Address who called the MessageBus execution function",
+						"_message": "Arbitrary message bytes originated from and encoded by the source app contract",
+						"_sender": "The address of the source app contract",
+						"_srcChainId": "The source chain ID where the transfer is originated from"
+					}
+				},
+				"executeMessageWithTransfer(address,address,uint256,uint64,bytes,address)": {
+					"params": {
+						"_amount": "the amount of tokens received at this contract through the cross-chain bridge",
+						"_message": "SwapRequest message that defines the swap behavior on this destination chain",
+						"_srcChainId": "source chain ID",
+						"_token": "the address of the token sent through the bridge"
+					}
+				},
+				"executeMessageWithTransferFallback(address,address,uint256,uint64,bytes,address)": {
+					"params": {
+						"_message": "SwapRequest message that defines the swap behavior on this destination chain",
+						"_srcChainId": "source chain ID"
+					}
+				},
+				"executeMessageWithTransferRefund(address,uint256,bytes,address)": {
+					"params": {
+						"_amount": "The amount of the original transfer",
+						"_executor": "Address who called the MessageBus execution function",
+						"_message": "The same message associated with the original transfer",
+						"_token": "The token address of the original transfer"
+					}
+				},
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				}
+			},
+			"title": "Demo application contract that facilitates swapping on a chain, transferring to another chain, and swapping another time on the destination chain before sending the result tokens to a user",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"executeMessage(address,uint64,bytes,address)": {
+					"notice": "Called by MessageBus (MessageBusReceiver)"
+				},
+				"executeMessageWithTransfer(address,address,uint256,uint64,bytes,address)": {
+					"notice": "called by MessageBus when the tokens are checked to be arrived at this contract's address. sends the amount received to the receiver. swaps beforehand if swap behavior is defined in message NOTE: if the swap fails, it sends the tokens received directly to the receiver as fallback behavior"
+				},
+				"executeMessageWithTransferFallback(address,address,uint256,uint64,bytes,address)": {
+					"notice": "called by MessageBus when the executeMessageWithTransfer call fails. does nothing but emitting a \"fail\" event"
+				},
+				"executeMessageWithTransferRefund(address,uint256,bytes,address)": {
+					"notice": "Called by MessageBus (MessageBusReceiver) to process refund of the original transfer from this contract"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/message/apps/examples/crossChainAndSwap.sol": "TransferSwap"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0xbbc8ac883ac3c0078ce5ad3e288fbb3ffcc8a30c3a98c0fda0114d64fc44fca2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://87a7a5d2f6f63f84598af02b8c50ca2df2631cb8ba2453e8d95fcb17e4be9824",
+				"dweb:/ipfs/QmR76hqtAcRqoFj33tmNjcWTLrgNsAaakYwnKZ8zoJtKei"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
+			"keccak256": "0xc3d946432c0ddbb1f846a0d3985be71299df331b91d06732152117f62f0be2b5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4632c341a06ba5c079b51ca5a915efab4e6ab57735b37839b3e8365ff806a43e",
+				"dweb:/ipfs/QmTHT3xHYed2wajEoA5qu7ii2BxLpPhQZHwAhtLK5Z7ANK"
+			]
+		},
+		"@openzeppelin/contracts/utils/Address.sol": {
+			"keccak256": "0x2ccf9d2313a313d41a791505f2b5abfdc62191b5d4334f7f7a82691c088a1c87",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b3a57d0854b2fdce6ebff933a48dca2445643d1eccfc27f00292e937f26c6a58",
+				"dweb:/ipfs/QmW45rZooS9TqR4YXUbjRbtf2Bpb5ouSarBvfW1LdGprvV"
+			]
+		},
+		"contracts/interfaces/IBridge.sol": {
+			"keccak256": "0x8e82fe8187b9bf8ce41b69f53b1facf5f3bf4fe658dad26f895c18e32a379ad4",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://70980ef35538ae0f9c9e5e4b4df53418ec20a763f6d5d68dff77ad308799cbf3",
+				"dweb:/ipfs/QmVHHduBjUjyHhPgmcSoUjkzU4BbnWoqB3AtFLAnu5zS7Q"
+			]
+		},
+		"contracts/interfaces/IOriginalTokenVault.sol": {
+			"keccak256": "0x85c01afb81124681afa70ad020475b67796fdd07b78d8564160c0860dba437fd",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://19eaea472cea2bd2097d506c329ff7a2ce161cad29185e4b0833e93083e19bd9",
+				"dweb:/ipfs/QmW2AZQerhLnbTW3vj7HqbLutFHpJPWv7SD4bxwJixMgY6"
+			]
+		},
+		"contracts/interfaces/IOriginalTokenVaultV2.sol": {
+			"keccak256": "0x936fca668dd720ebaf71ebff2c152ffbe63f8e41dcfcd60c7976d16a16f04eb8",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://ea7714878c793a001ab45c2554e143ae1f99c4fe75324f5e847adffad5206ef9",
+				"dweb:/ipfs/QmQ66nrkuBqVDgBKJK9uhGqCuBm5zx1VVQqLind7UbpC6X"
+			]
+		},
+		"contracts/interfaces/IPeggedTokenBridge.sol": {
+			"keccak256": "0x799f277556757fd6578ab4e760660a4bee8ec49e59d7a5eb5275c5d5f24bc219",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://755f4dca5e038d3783b482c119e7a6c8cc8caa8cc7df42ebff7a69a8593f90b7",
+				"dweb:/ipfs/QmXmzLm9PrMc4qKDzRe42BdjiQJwKp6CkzaZEm1V96xNeb"
+			]
+		},
+		"contracts/interfaces/IPeggedTokenBridgeV2.sol": {
+			"keccak256": "0x5c2629409725f70398c6520d023664bc444f049f00735481d9e5306da297c87e",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://8cf563db00083e8a9db578dbcd29d435bd78c3fa198f5c66b78ca6ac5b9bc40a",
+				"dweb:/ipfs/QmcHhWxm8crq6CPgsKmi6SVCZ3PWfZ1fZchMvdwjSkSWgY"
+			]
+		},
+		"contracts/interfaces/ISigsVerifier.sol": {
+			"keccak256": "0x64957c1004af8c9a8fe54ad5fdba6e8af24a75f92bf77e7eefe71b1f39926f4c",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://c62b8cb859038314db13fcb5cdae48068af1de5f5dbd11b4f1abfba8d1b2448d",
+				"dweb:/ipfs/QmbkX1q6Rx1fdkcvSpa7odNkr6XsPMQ7oyLNb9Y3PuZqa2"
+			]
+		},
+		"contracts/interfaces/IUniswapV2.sol": {
+			"keccak256": "0xdc0156e0ab421369c5e3ea7a5e7741a68e0368318234682c66e6fcaf02d8e3a7",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://8dd8b902f39432d8c4ca6fee7f79083d34d0318978adb9a1fb064d6d5aed6b87",
+				"dweb:/ipfs/QmWgrkE8VkoGRYFpXnAw7PyjNHd7smTX1eFaGzCt8rL6Ui"
+			]
+		},
+		"contracts/interfaces/IWETH.sol": {
+			"keccak256": "0xdee9c4e935ee53bd7c7d3fd94f02678bb7c55d83cf8de1536d0956800352ad98",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://c6d2db72f292a489d4f8dbf89883dee23ea011b5724da9c31dbe4bcecda86d84",
+				"dweb:/ipfs/QmZ4dKAhHpC5NG11r8ZpMaWRWknVY9EyfPX5shhmJFdVPs"
+			]
+		},
+		"contracts/message/apps/examples/crossChainAndSwap.sol": {
+			"keccak256": "0xf262786ae03abea011a7ee42e173041bda9f2f98b700d2afe80b22df99200c57",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://3919d2888ed92244ddeeef0350a76d69176dbd011108bd3d6760b2895e3e5fe0",
+				"dweb:/ipfs/QmfY19PwEtoJrum3kSTXEiXNg6EgYn8ekVNn2nP1eNT53g"
+			]
+		},
+		"contracts/message/framework/MessageBusAddress.sol": {
+			"keccak256": "0x7b099e196cbeb71c6a2c3f2ef3295718027622b69b539d0240e2f5d46bb6669c",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://06951d3ba7bbb2a29fc1485794652e685615cbd89db61191931a78d78cb267b3",
+				"dweb:/ipfs/QmWttnpd6AFV6F87F7LAWsFBDFz3vjXsQ7YFXbsx1v5omv"
+			]
+		},
+		"contracts/message/framework/MessageReceiverApp.sol": {
+			"keccak256": "0x412e4f63b881c2dbf38f3fa47d84e253d49a8ee86415950d0241bd4398e3f524",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://2121f935753e3e96cba3314a2592bbbc115114275201810dbd3d2e6139e894c9",
+				"dweb:/ipfs/QmZPT7pFpjh6ZSNMhdGsR4wXsyAmHNFE96qzECdm2W5L5N"
+			]
+		},
+		"contracts/message/framework/MessageSenderApp.sol": {
+			"keccak256": "0xf934168db58b8e4a751ae0620c8c185a505ea6c8e1a0281534cbbfe7c254b62c",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://9ecf7e54430deb50e94e59679a96855eab87fe18392f0a4fe767cffc0a0cfa6f",
+				"dweb:/ipfs/QmTnXHGYKT5avxnTZC135UFt2tGXcoHV5e3uAVPYSuA9SR"
+			]
+		},
+		"contracts/message/interfaces/IMessageBus.sol": {
+			"keccak256": "0x0da93eeddf952e74d53a0f4876362705a8e7821f0459c71df4ff567dc778c7bf",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://0188aaa95fbdde49efa6cf8630a9b3316d4245b4c3b60469ad5c6a19ac2be77d",
+				"dweb:/ipfs/QmWER1oLu3FQkWnmkHZWkoYpNgsUpA27KErGgZuZEirH3o"
+			]
+		},
+		"contracts/message/interfaces/IMessageReceiverApp.sol": {
+			"keccak256": "0xff29f028e40de38cba3901a70d4e951d74b773d68a70fca4e05b372b83a56656",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://2854ad6126c5218086df388e3bbc520cbde1ae3a05a5fb87022481ca28e55081",
+				"dweb:/ipfs/Qmdbi4NGKJ3xnVewF6qC6EJTNyHAi5xDPaZcnBufrG1RXL"
+			]
+		},
+		"contracts/message/libraries/MessageSenderLib.sol": {
+			"keccak256": "0x120977e4c91b0a56b0882b422eed720ee192e36d85d6236fae934a34a5590f00",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://21af4f14aaa37d2d1e9e175a61b7cfabc64ee3ba4de405a28ebcd5239ec70eb7",
+				"dweb:/ipfs/QmTGSHkDXbzXQPT776zQKcxV8HurBqpU8JnJKgstm5g7tV"
+			]
+		},
+		"contracts/message/libraries/MsgDataTypes.sol": {
+			"keccak256": "0x35833fcba66606e04d520c6d5759eae0dcfb1caee548a87deb2364aa7b39df5a",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://c3fc86ef028d4caa16ca93ded4fb94c327c8d4ec776a7802c41f0db4fd5a75c7",
+				"dweb:/ipfs/QmWWBJYwYuSDtrJ9oTC3Xv4RUYfcdDhd8Hdbdw3QwTskyG"
+			]
+		},
+		"contracts/message/messagebus/MessageBus.sol": {
+			"keccak256": "0x00296aff3c00ac9043ff75d271f06dabfa023f64b991cb324228c2282ed379a0",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://63d57b98fac859ca382e9d55db5d2bde111bf8471ca88899af84f95acb5fcf51",
+				"dweb:/ipfs/QmfP36hQzJyvzTkZ8hQJGiv6NZ6BWc5hSXdL7rM9UwNBf6"
+			]
+		},
+		"contracts/message/messagebus/MessageBusReceiver.sol": {
+			"keccak256": "0x63fe6d00baf38a9f5981bf551955308d2fe2bf95055b4212fd917d0e27f5fe63",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://1c8ad3210e6cb06d7726f27870fa2b9a5ecc5ba7743271da9ac057576d6187e2",
+				"dweb:/ipfs/QmRJCahmoMfwch5f7Pq7KGqzvtTuHJtUMq91t7FXb8Fhwk"
+			]
+		},
+		"contracts/message/messagebus/MessageBusSender.sol": {
+			"keccak256": "0x344b6a4b3401b17a102f448cfcfe92a71e8f5c2d73bd0d3fe7bfd0f0300636b3",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://cf0d2b201fdbbd94fb8d28c4a2e07b6803ee80db5fd08de9726216501bc22101",
+				"dweb:/ipfs/QmdH5EsrtfaJ1nGKGvGZUUiGyCfo6pLo7ZHxyFsWaaYy25"
+			]
+		},
+		"contracts/safeguard/Ownable.sol": {
+			"keccak256": "0xfa85eba884c4b3be9bada2125c59907854d553c63f6610a82eb595bd207f42c3",
+			"license": "GPL-3.0-only",
+			"urls": [
+				"bzz-raw://0891a1680730762028af4a4eb00928871ee27e7559b14fd928f6e50bd9ddb623",
+				"dweb:/ipfs/QmRddPD3r3hXDLn3d34TeevvwFWaDGVnC64Hqi7jHm5Nt5"
+			]
+		}
+	},
+	"version": 1
+}
